@@ -1,6 +1,6 @@
 {
   "name": "spotify-resolve",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "You pass it Spotify URIs (e.g. spotify:album:3HJ4C0poaEMEg8u56sfr02). It gives you back Spotify entities. You do not have to figure out what endpoint to call.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,9 @@
     "type": "git",
     "url": "git@github.com:jimkang/spotify-resolve.git"
   },
-  "keywords": [],
+  "keywords": [
+    "spotify"
+  ],
   "author": "Jim Kang",
   "license": "MIT",
   "bugs": {

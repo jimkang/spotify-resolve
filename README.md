@@ -13,7 +13,7 @@ Installation
 Usage
 -----
 
-`spotify-resolve` exports a functor you call to create a resolve function you can use to resolve URIs, rather than exporting a resolve function directly:
+`spotify-resolve` exports a constructor that creates a function you can use to resolve URIs:
 
     var spResolve = require('spotify-resolve')();
     spResolve('spotify:album:3HJ4C0poaEMEg8u56sfr02', logResult);
