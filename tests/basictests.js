@@ -50,6 +50,19 @@ var testCases = [
       ]
     },
 
+  {
+      name: 'Unfindable resource URIs',
+      createOpts: undefined,
+      opts: [
+        'spotify:track:zTiCkACNmrC80bCJ3K2a4U',
+        'spotify:track:zlOHeRgeA3oCyxxHl6sVsa'
+      ],
+      expectationCheckers: [
+        checkUndefined,
+        checkUndefined
+      ]
+    },
+
     {
       name: 'Custom request function',
       createOpts: {

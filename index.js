@@ -87,6 +87,9 @@ function SpotifyResolve(createOpts) {
       if (error) {
         done(error);
       }
+      else if (!resultGroupsForTypes) {
+        done(error, []);
+      }
       else {
         resultGroupsForTypes.forEach(storeResultGroups);
         var finalResults = uris.map(getResolvedObjectForURI);
@@ -103,11 +106,15 @@ function SpotifyResolve(createOpts) {
       }
 
       function storeResultGroups(resultGroups) {
-        resultGroups.forEach(storeResults);
+        if (resultGroups) {
+          resultGroups.forEach(storeResults);
+        }
       }
 
       function storeResults(results) {
-        results.forEach(storeResult);
+        if (results) {
+          results.forEach(storeResult);
+        }
       }
 
       function storeResult(result) {
