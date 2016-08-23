@@ -1,6 +1,6 @@
 {
   "name": "spotify-resolve",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "You pass it Spotify URIs (e.g. spotify:album:3HJ4C0poaEMEg8u56sfr02). It gives you back Spotify entities. You do not have to figure out what endpoint to call.",
   "main": "index.js",
   "scripts": {
