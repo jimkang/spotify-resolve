@@ -32,57 +32,79 @@ var testCases = [
   },
 
   {
-      name: 'Bad resource URIs',
-      createOpts: undefined,
-      opts: [
-        'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
-        'spotify:what:3lOHeRgeA3oCyxxHl6sVsa',
-        'spotify:artist:099tLNCZZvtjC7myKD0mFp',
-        'spotify:track:thisisnotreal',
-        'spotify:album:3HJ4C0poaEMEg8u56sfr02'
-      ],
-      expectationCheckers: [
-        checkTrack,
-        checkUndefined,
-        checkArtist,
-        checkUndefined,
-        checkAlbum
-      ]
-    },
+    name: 'Bad resource URIs',
+    createOpts: undefined,
+    opts: [
+      'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
+      'spotify:what:3lOHeRgeA3oCyxxHl6sVsa',
+      'spotify:artist:099tLNCZZvtjC7myKD0mFp',
+      'spotify:track:thisisnotreal',
+      'spotify:album:3HJ4C0poaEMEg8u56sfr02'
+    ],
+    expectationCheckers: [
+      checkTrack,
+      checkUndefined,
+      checkArtist,
+      checkUndefined,
+      checkAlbum
+    ]
+  },
 
   {
-      name: 'Unfindable resource URIs',
-      createOpts: undefined,
-      opts: [
-        'spotify:track:zTiCkACNmrC80bCJ3K2a4U',
-        'spotify:track:zlOHeRgeA3oCyxxHl6sVsa'
-      ],
-      expectationCheckers: [
-        checkUndefined,
-        checkUndefined
-      ]
-    },
+    name: 'Unfindable resource URIs',
+    createOpts: undefined,
+    opts: [
+      'spotify:track:zTiCkACNmrC80bCJ3K2a4U',
+      'spotify:track:zlOHeRgeA3oCyxxHl6sVsa'
+    ],
+    expectationCheckers: [
+      checkUndefined,
+      checkUndefined
+    ]
+  },
 
-    {
-      name: 'Custom request function',
-      createOpts: {
-        request: customRequestFunction
-      },
-      opts: [
-        'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
-        'spotify:track:3lOHeRgeA3oCyxxHl6sVsa',
-        'spotify:artist:099tLNCZZvtjC7myKD0mFp',
-        'spotify:track:41uWkGOCpz0CA5vJ1nIKI6',
-        'spotify:album:3HJ4C0poaEMEg8u56sfr02'
-      ],
-      expectationCheckers: [
-        checkTrack,
-        checkTrack,
-        checkArtist,
-        checkTrack,
-        checkAlbum
-      ]
-    }
+  {
+    name: 'Custom request function',
+    createOpts: {
+      request: customRequestFunction
+    },
+    opts: [
+      'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
+      'spotify:track:3lOHeRgeA3oCyxxHl6sVsa',
+      'spotify:artist:099tLNCZZvtjC7myKD0mFp',
+      'spotify:track:41uWkGOCpz0CA5vJ1nIKI6',
+      'spotify:album:3HJ4C0poaEMEg8u56sfr02'
+    ],
+    expectationCheckers: [
+      checkTrack,
+      checkTrack,
+      checkArtist,
+      checkTrack,
+      checkAlbum
+    ]
+  },
+
+  // {
+  //   name: 'Use access token',
+  //   createOpts: {
+  //     accessToken: config.accessToken
+  //   },
+  //   opts: [
+  //     'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
+  //     'spotify:track:3lOHeRgeA3oCyxxHl6sVsa',
+  //     'spotify:artist:099tLNCZZvtjC7myKD0mFp',
+  //     'spotify:track:41uWkGOCpz0CA5vJ1nIKI6',
+  //     'spotify:album:3HJ4C0poaEMEg8u56sfr02'
+  //   ],
+  //   expectationCheckers: [
+  //     checkTrack,
+  //     checkTrack,
+  //     checkArtist,
+  //     checkTrack,
+  //     checkAlbum
+  //   ]    
+  // },
+
 ];
 
 testCases.forEach(runTest);

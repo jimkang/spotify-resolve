@@ -21,6 +21,7 @@
   "homepage": "https://github.com/jimkang/spotify-resolve",
   "devDependencies": {
     "assert-no-error": "^1.0.0",
+    "eslint": "^3.4.0",
     "tape": "^4.6.0"
   },
   "dependencies": {
