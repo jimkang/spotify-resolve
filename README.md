@@ -55,8 +55,8 @@ Example:
 
     var http = require('http');
 
-    var SpotifyResolveFunctor = require('spotify-resolve');
-    var spResolve = SpotifyResolveFunctor({
+    var SpotifyResolve = require('spotify-resolve');
+    var spResolve = SpotifyResolve({
       request: myRequestFunction
     });
 
