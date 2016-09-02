@@ -46,7 +46,7 @@ This will print out an array of three [Spotify track objects](https://developer.
 Plug in your own request library
 ---------------------------------
 
-By default, it uses [request](https://github.com/request/request) to make http calls. If you want to specify a different http request function to handle that, you can by passing it to the functor. Like `request`, your function needs to:
+By default, it uses [request](https://github.com/request/request) to make http calls. If you want to specify a different http request function to handle that, you can by passing it to the constructor. Like `request`, your function needs to:
 
     - Take an opt object that has `url` and `method` properties.
     - Take a callback that will be passed an error, a response object (can be null), and a parsed JSON body.
