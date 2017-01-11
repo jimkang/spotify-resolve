@@ -15,7 +15,10 @@ Usage
 
 `spotify-resolve` exports a constructor that creates a function you can use to resolve URIs:
 
-    var spResolve = require('spotify-resolve')();
+    var request = require('request');
+    var spResolve = require('spotify-resolve')({
+      request: request
+    });
     spResolve('spotify:album:3HJ4C0poaEMEg8u56sfr02', logResult);
 
     function logResult(error, result) {
@@ -42,6 +45,8 @@ To get *many* URIs resolved:
     );
 
 This will print out an array of three [Spotify track objects](https://developer.spotify.com/web-api/get-track/) and one [Spotify album object](https://developer.spotify.com/web-api/get-album/).
+
+You can also pass a `bearerToken` opt to the constructor to have it use an access token in API calls.
 
 Plug in your own request library
 ---------------------------------
