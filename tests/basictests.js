@@ -86,6 +86,20 @@ var testCases = [
     ]
   },
 
+  {
+    name: 'No URIs',
+    createOpts: {request: defaultRequest},
+    opts: [],
+    expectationCheckers: []
+  },
+
+  {
+    name: 'No params',
+    createOpts: {request: defaultRequest},
+    opts: undefined,
+    expectationCheckers: []
+  },
+
   // {
   //   name: 'Use bearer token',
   //   createOpts: {request: defaultRequest, bearerToken: '<bearer token here>'},

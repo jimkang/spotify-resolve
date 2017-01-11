@@ -1,6 +1,7 @@
 var splitArray = require('split-array');
 var queue = require('d3-queue').queue;
 var parseSpotifyUriToObject = require('./parse-spotify-uri-to-object');
+var callNextTick = require('call-next-tick');
 
 var apiInfoForTypes = {
   track: {
@@ -42,8 +43,12 @@ function SpotifyResolve(createOpts) {
     if (Array.isArray(opts)) {
       uris = opts;
     }
-    else {
+    else if (opts) {
       uris = [opts];
+    }
+    else {
+      callNextTick(done);
+      return;
     }
 
     uris.forEach(sortIdByType);
