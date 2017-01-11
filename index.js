@@ -1,6 +1,4 @@
-var defaultRequest = require('request');
 var splitArray = require('split-array');
-var flatten = require('lodash.flatten');
 var queue = require('d3-queue').queue;
 var parseSpotifyUriToObject = require('./parse-spotify-uri-to-object');
 
@@ -24,13 +22,11 @@ var apiInfoForTypes = {
 
 function SpotifyResolve(createOpts) {
   var request;
+  var bearerToken;
 
   if (createOpts) {
     request = createOpts.request;
-  }
-
-  if (!request) {
-    request = defaultRequest;
+    bearerToken = createOpts.bearerToken;
   }
 
   return spotifyResolve;
@@ -135,6 +131,13 @@ function SpotifyResolve(createOpts) {
       url: apiInfo.endpoint + '?ids=' + ids.join(','),
       json: true
     };
+
+    if (bearerToken) {
+      reqOpts.headers = {
+        Authorization: 'Bearer ' + bearerToken
+      };
+    }
+
     request(reqOpts, passResults);
 
     function passResults(error, response, results) {

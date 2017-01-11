@@ -3,18 +3,20 @@ var assertNoError = require('assert-no-error');
 var SpotifyResolve = require('../index');
 var url = require('url');
 var https = require('https');
+var checkers = require('./checkers');
+var defaultRequest = require('request');
 
 var testCases = [
   {
     name: 'One album',
-    createOpts: undefined,
+    createOpts: {request: defaultRequest},
     opts: 'spotify:album:3HJ4C0poaEMEg8u56sfr02',
-    expectationCheckers: checkAlbum
+    expectationCheckers: checkers.checkAlbum
   },
 
   {
     name: 'Multiple heterogeneous resources',
-    createOpts: undefined,
+    createOpts: {request: defaultRequest},
     opts: [
       'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
       'spotify:track:3lOHeRgeA3oCyxxHl6sVsa',
@@ -23,17 +25,17 @@ var testCases = [
       'spotify:album:3HJ4C0poaEMEg8u56sfr02'
     ],
     expectationCheckers: [
-      checkTrack,
-      checkTrack,
-      checkArtist,
-      checkTrack,
-      checkAlbum
+      checkers.checkTrack,
+      checkers.checkTrack,
+      checkers.checkArtist,
+      checkers.checkTrack,
+      checkers.checkAlbum
     ]    
   },
 
   {
     name: 'Bad resource URIs',
-    createOpts: undefined,
+    createOpts: {request: defaultRequest},
     opts: [
       'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
       'spotify:what:3lOHeRgeA3oCyxxHl6sVsa',
@@ -42,24 +44,24 @@ var testCases = [
       'spotify:album:3HJ4C0poaEMEg8u56sfr02'
     ],
     expectationCheckers: [
-      checkTrack,
-      checkUndefined,
-      checkArtist,
-      checkUndefined,
-      checkAlbum
+      checkers.checkTrack,
+      checkers.checkUndefined,
+      checkers.checkArtist,
+      checkers.checkUndefined,
+      checkers.checkAlbum
     ]
   },
 
   {
     name: 'Unfindable resource URIs',
-    createOpts: undefined,
+    createOpts: {request: defaultRequest},
     opts: [
       'spotify:track:zTiCkACNmrC80bCJ3K2a4U',
       'spotify:track:zlOHeRgeA3oCyxxHl6sVsa'
     ],
     expectationCheckers: [
-      checkUndefined,
-      checkUndefined
+      checkers.checkUndefined,
+      checkers.checkUndefined
     ]
   },
 
@@ -76,19 +78,17 @@ var testCases = [
       'spotify:album:3HJ4C0poaEMEg8u56sfr02'
     ],
     expectationCheckers: [
-      checkTrack,
-      checkTrack,
-      checkArtist,
-      checkTrack,
-      checkAlbum
+      checkers.checkTrack,
+      checkers.checkTrack,
+      checkers.checkArtist,
+      checkers.checkTrack,
+      checkers.checkAlbum
     ]
   },
 
   // {
-  //   name: 'Use access token',
-  //   createOpts: {
-  //     accessToken: config.accessToken
-  //   },
+  //   name: 'Use bearer token',
+  //   createOpts: {request: defaultRequest, bearerToken: '<bearer token here>'},
   //   opts: [
   //     'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
   //     'spotify:track:3lOHeRgeA3oCyxxHl6sVsa',
@@ -97,14 +97,13 @@ var testCases = [
   //     'spotify:album:3HJ4C0poaEMEg8u56sfr02'
   //   ],
   //   expectationCheckers: [
-  //     checkTrack,
-  //     checkTrack,
-  //     checkArtist,
-  //     checkTrack,
-  //     checkAlbum
+  //     checkers.checkTrack,
+  //     checkers.checkTrack,
+  //     checkers.checkArtist,
+  //     checkers.checkTrack,
+  //     checkers.checkAlbum
   //   ]    
-  // },
-
+  // }
 ];
 
 testCases.forEach(runTest);
@@ -130,31 +129,6 @@ function runTest(testCase) {
       t.end();
     }
   }
-}
-
-function checkAlbum(t, album) {
-  t.equal(typeof album.name, 'string', 'album has a name.');
-  t.equal(typeof album.album_type, 'string', 'Album has an album_type.');
-  t.ok(Array.isArray(album.artists), 'Album has artists.');
-  t.equal(typeof album.external_ids, 'object', 'Album has external_ids.');
-  // TODO: Jillions of other properties.
-}
-
-function checkArtist(t, artist) {
-  t.equal(typeof artist.name, 'string', 'artist has a name.');
-  t.equal(typeof artist.href, 'string', 'artist has an href.');
-  t.equal(typeof artist.external_urls, 'object', 'artist has external_urls.');
-}
-
-function checkTrack(t, track) {
-  t.equal(typeof track.name, 'string', 'track has a name.');
-  t.equal(typeof track.href, 'string', 'track has an href.');
-  t.equal(typeof track.album, 'object', 'track has an album.');  
-  t.ok(Array.isArray(track.artists), 'track has artists.');
-}
-
-function checkUndefined(t, thing) {
-  t.equal(thing, undefined, 'Entry is undefined.');
 }
 
 function customRequestFunction(opts, callback) {
