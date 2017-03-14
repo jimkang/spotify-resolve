@@ -105,12 +105,21 @@ Tests
 
 Run tests with `make test`.
 
+To run the client credentials tests, create a `config.js` file in tests/ with these contents:
+
+    module.exports = {
+      clientId: '<Your Spotify API client id>',
+      clientSecret: '<Your Spotify API client secret>'
+    };
+
+Then, run `node tests/bearer-token-tests.js`.
+
 License
 -------
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Jim Kang
+Copyright (c) 2017 Jim Kang
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the 'Software'), to deal

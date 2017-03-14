@@ -1,5 +1,6 @@
 test:
 	node tests/basictests.js
+	node tests/bearer-token-tests.js
 
 pushall:
 	git push origin master && npm publish

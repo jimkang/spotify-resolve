@@ -98,26 +98,7 @@ var testCases = [
     createOpts: {request: defaultRequest},
     opts: undefined,
     expectationCheckers: []
-  },
-
-  // {
-  //   name: 'Use bearer token',
-  //   createOpts: {request: defaultRequest, bearerToken: '<bearer token here>'},
-  //   opts: [
-  //     'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
-  //     'spotify:track:3lOHeRgeA3oCyxxHl6sVsa',
-  //     'spotify:artist:099tLNCZZvtjC7myKD0mFp',
-  //     'spotify:track:41uWkGOCpz0CA5vJ1nIKI6',
-  //     'spotify:album:3HJ4C0poaEMEg8u56sfr02'
-  //   ],
-  //   expectationCheckers: [
-  //     checkers.checkTrack,
-  //     checkers.checkTrack,
-  //     checkers.checkArtist,
-  //     checkers.checkTrack,
-  //     checkers.checkAlbum
-  //   ]    
-  // }
+  }
 ];
 
 testCases.forEach(runTest);
