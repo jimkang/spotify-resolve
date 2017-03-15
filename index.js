@@ -2,6 +2,7 @@ var splitArray = require('split-array');
 var queue = require('d3-queue').queue;
 var parseSpotifyUriToObject = require('./parse-spotify-uri-to-object');
 var callNextTick = require('call-next-tick');
+var pluck = require('lodash.pluck');
 
 var apiInfoForTypes = {
   track: {
@@ -18,6 +19,10 @@ var apiInfoForTypes = {
     endpoint: 'https://api.spotify.com/v1/albums',
     relevantResultProperty: 'albums',
     limit: 20
+  },
+  playlist: {
+    isPlaylist: true,
+    limit: 1
   }
 };
 
@@ -34,10 +39,11 @@ function SpotifyResolve(createOpts) {
 
   function spotifyResolve(opts, done) {
     var uris;
-    var idsByType = {
+    var parsedURIsByType = {
       track: [],
       artist: [],
-      album: []
+      album: [],
+      playlist: []
     };
 
     if (Array.isArray(opts)) {
@@ -51,17 +57,26 @@ function SpotifyResolve(createOpts) {
       return;
     }
 
-    uris.forEach(sortIdByType);
+    uris.forEach(sortParsedURIByType);
 
     var q = queue();
 
-    for (var type in idsByType) {
-      if (idsByType[type].length > 0) {
-        q.defer(resolveIds, type, idsByType[type]);
+    for (var type in parsedURIsByType) {
+      if (parsedURIsByType[type].length > 0) {
+        if (type === 'playlist') {
+          parsedURIsByType[type].forEach(queueResolvePlaylist);
+        }
+        else {
+          q.defer(resolveIds, type, pluck(parsedURIsByType[type], 'id'));
+        }
       }
     }
 
     q.awaitAll(arrangeResultsInOrder);
+
+    function queueResolvePlaylist(parsedURI) {
+      q.defer(resolvePlaylist, parsedURI);
+    }
 
     function resolveIds(type, ids, done) {
       var apiInfo = apiInfoForTypes[type];
@@ -75,10 +90,10 @@ function SpotifyResolve(createOpts) {
       }
     }
 
-    function sortIdByType(uri) {
+    function sortParsedURIByType(uri) {
       var uriObject = parseSpotifyUriToObject(uri);
-      if (uriObject.type in idsByType) {
-        idsByType[uriObject.type].push(uriObject.id);
+      if (uriObject.type in parsedURIsByType) {
+        parsedURIsByType[uriObject.type].push(uriObject);
       }
     }
 
@@ -154,6 +169,33 @@ function SpotifyResolve(createOpts) {
       }
     }
   }
+
+  function resolvePlaylist(uriObject, done) {
+    var reqOpts = {
+      method: 'GET',
+      url: 'https://api.spotify.com/v1/users/' + uriObject.user + '/playlists/' + uriObject.id,
+      json: true
+    };
+
+    if (bearerToken) {
+      reqOpts.headers = {
+        Authorization: 'Bearer ' + bearerToken
+      };
+    }
+
+    request(reqOpts, passResults);
+
+    function passResults(error, response, playlistObject) {
+      if (error) {
+        done(error);
+      }
+      else {
+        // storeResultGroups expects arrays of arrays.
+        done(error, [[playlistObject]]);
+      }
+    }
+  }
+
 }
 
 module.exports = SpotifyResolve;

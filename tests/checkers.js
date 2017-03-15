@@ -23,9 +23,17 @@ function checkUndefined(t, thing) {
   t.equal(thing, undefined, 'Entry is undefined.');
 }
 
+function checkPlaylist(t, playlist) {
+  t.equal(typeof playlist.name, 'string', 'playlist has a name.');
+  t.equal(typeof playlist.owner.id, 'string', 'playlist has an owner.');
+  t.ok(Array.isArray(playlist.tracks.items), 'playlist has tracks.');
+  t.equal(typeof playlist.uri, 'string', 'playlist has a uri.');
+}
+
 module.exports = {
   checkAlbum: checkAlbum,
   checkArtist: checkArtist,
   checkTrack: checkTrack,
-  checkUndefined: checkUndefined
+  checkUndefined: checkUndefined,
+  checkPlaylist: checkPlaylist
 };

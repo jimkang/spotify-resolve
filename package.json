@@ -30,6 +30,7 @@
     "call-next-tick": "^1.1.2",
     "d3-queue": "^3.0.1",
     "lodash.flatten": "^4.2.0",
+    "lodash.pluck": "^3.1.2",
     "split-array": "^1.0.1"
   }
 }
