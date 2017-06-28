@@ -164,6 +164,9 @@ function SpotifyResolve(createOpts) {
       if (error) {
         done(error);
       }
+      else if (response.statusCode === 401) {
+        done(new Error(response.statusCode), response);
+      }
       else {
         done(error, results[apiInfo.relevantResultProperty]);
       }
