@@ -124,6 +124,11 @@ function runTest(testCase) {
       testCase.createOpts.bearerToken = token;
       var spResolve = SpotifyResolve(testCase.createOpts);
 
+      // pass token to cu
+      if (testCase.opts) {
+        testCase.opts.bearerToken = token;
+      }
+
       spResolve(testCase.opts, checkResult);
 
       function checkResult(error, result) {
@@ -145,11 +150,12 @@ function runTest(testCase) {
 
 function customRequestFunction(opts, callback) {
   var responseString = '';
-
   var httpOpts = url.parse(opts.url);
   httpOpts.method = opts.method;
+  httpOpts.headers = opts.headers;
 
   var req = https.request(httpOpts, handleResponseEvents);
+
   req.on('error', respondToError);
   req.end();
 
