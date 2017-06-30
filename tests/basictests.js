@@ -5,6 +5,8 @@ var url = require('url');
 var https = require('https');
 var checkers = require('./checkers');
 var defaultRequest = require('request');
+var getClientCredentials = require('get-spotify-client-credentials');
+var config = require('./config');
 
 var testCases = [
   {
@@ -30,7 +32,7 @@ var testCases = [
       checkers.checkArtist,
       checkers.checkTrack,
       checkers.checkAlbum
-    ]    
+    ]
   },
 
   {
@@ -107,21 +109,40 @@ function runTest(testCase) {
   test(testCase.name, basicTest);
 
   function basicTest(t) {
-    var spResolve = SpotifyResolve(testCase.createOpts);
-    spResolve(testCase.opts, checkResult);
 
-    function checkResult(error, result) {
-      assertNoError(t.ok, error, 'No error while calling spotifyResolve.');
-      // console.log(JSON.stringify(result, null, '  '));
-      if (Array.isArray(testCase.expectationCheckers)) {
-        for (var i = 0; i < testCase.expectationCheckers.length; ++i) {
-          testCase.expectationCheckers[i](t, result[i]);
+    // APIs now require auth
+    getClientCredentials(
+      {
+        clientId: config.clientId,
+        clientSecret: config.clientSecret,
+        request: defaultRequest
+      },
+      useCreds
+    );
+
+    function useCreds(error, token) {
+      testCase.createOpts.bearerToken = token;
+      var spResolve = SpotifyResolve(testCase.createOpts);
+
+      if (testCase.opts) {
+        testCase.opts.bearerToken = token;
+      }
+
+      spResolve(testCase.opts, checkResult);
+
+      function checkResult(error, result) {
+        assertNoError(t.ok, error, 'No error while calling spotifyResolve.');
+        // console.log(JSON.stringify(result, null, '  '));
+        if (Array.isArray(testCase.expectationCheckers)) {
+          for (var i = 0; i < testCase.expectationCheckers.length; ++i) {
+            testCase.expectationCheckers[i](t, result[i]);
+          }
         }
+        else {
+          testCase.expectationCheckers(t, result);
+        }
+        t.end();
       }
-      else {
-        testCase.expectationCheckers(t, result);
-      }
-      t.end();
     }
   }
 }
@@ -131,6 +152,7 @@ function customRequestFunction(opts, callback) {
 
   var httpOpts = url.parse(opts.url);
   httpOpts.method = opts.method;
+  httpOpts.headers = opts.headers;
 
   var req = https.request(httpOpts, handleResponseEvents);
   req.on('error', respondToError);
