@@ -166,7 +166,7 @@ function SpotifyResolve(createOpts) {
       }
       else if (response.statusCode === 401) {
         var unauthorizedError = new Error('Authorization Error: received status code ' + response.statusCode);
-        unauthorizedError.name = response.statusCode;
+        unauthorizedError.name = 'Unauthorized';
         done(unauthorizedError, response);
       }
       else {
