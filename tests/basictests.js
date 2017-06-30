@@ -150,12 +150,12 @@ function runTest(testCase) {
 
 function customRequestFunction(opts, callback) {
   var responseString = '';
+
   var httpOpts = url.parse(opts.url);
   httpOpts.method = opts.method;
   httpOpts.headers = opts.headers;
 
   var req = https.request(httpOpts, handleResponseEvents);
-
   req.on('error', respondToError);
   req.end();
 
