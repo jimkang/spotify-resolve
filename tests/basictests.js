@@ -124,7 +124,6 @@ function runTest(testCase) {
       testCase.createOpts.bearerToken = token;
       var spResolve = SpotifyResolve(testCase.createOpts);
 
-      // pass token to cu
       if (testCase.opts) {
         testCase.opts.bearerToken = token;
       }
