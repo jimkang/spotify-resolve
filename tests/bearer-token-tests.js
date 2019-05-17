@@ -27,8 +27,8 @@ var testCases = [
   {
     name: 'Get playlists',
     opts: [
-      'spotify:user:deathmtn:playlist:2rt3nNo9JVSWeH4IeMILrh',
-      'spotify:user:bolonium:playlist:6PeY74K2tQ78rZTtn0BLBF'
+      'spotify:playlist:2rt3nNo9JVSWeH4IeMILrh',
+      'spotify:playlist:6PeY74K2tQ78rZTtn0BLBF'
     ],
     expectationCheckers: [
       checkers.checkPlaylist,
