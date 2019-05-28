@@ -48,6 +48,20 @@ This will print out an array of three [Spotify track objects](https://developer.
 
 You can also pass a `bearerToken` opt to the constructor to have it use an access token in API calls.
 
+async/await
+---------
+
+If you'd like to use it with async/await, grab [errorback-promise](https://github.com/jimkang/errorback-promise) and use it to call `spResolve` like so:
+
+    var ep = require('errorback-promise');
+    
+    var r = await ep(spResolve, [ 'spotify:track:6TiCkACNmrC80bCJ3K2a4U', 'spotify:track:3lOHeRgeA3oCyxxHl6sVsa']);
+    if (r.error) {
+      console.log(error);
+    } else {
+      // Use resolved objects in r.values.
+    }
+
 Plug in your own request library
 ---------------------------------
 
