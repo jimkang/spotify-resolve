@@ -11,14 +11,14 @@ var config = require('./config');
 var testCases = [
   {
     name: 'One album',
-    createOpts: {request: defaultRequest},
+    createOpts: { request: defaultRequest },
     opts: 'spotify:album:3HJ4C0poaEMEg8u56sfr02',
     expectationCheckers: checkers.checkAlbum
   },
 
   {
     name: 'Multiple heterogeneous resources',
-    createOpts: {request: defaultRequest},
+    createOpts: { request: defaultRequest },
     opts: [
       'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
       'spotify:track:3lOHeRgeA3oCyxxHl6sVsa',
@@ -37,7 +37,7 @@ var testCases = [
 
   {
     name: 'Bad resource URIs',
-    createOpts: {request: defaultRequest},
+    createOpts: { request: defaultRequest },
     opts: [
       'spotify:track:6TiCkACNmrC80bCJ3K2a4U',
       'spotify:what:3lOHeRgeA3oCyxxHl6sVsa',
@@ -56,15 +56,12 @@ var testCases = [
 
   {
     name: 'Unfindable resource URIs',
-    createOpts: {request: defaultRequest},
+    createOpts: { request: defaultRequest },
     opts: [
       'spotify:track:zTiCkACNmrC80bCJ3K2a4U',
       'spotify:track:zlOHeRgeA3oCyxxHl6sVsa'
     ],
-    expectationCheckers: [
-      checkers.checkUndefined,
-      checkers.checkUndefined
-    ]
+    expectationCheckers: [checkers.checkUndefined, checkers.checkUndefined]
   },
 
   {
@@ -90,14 +87,14 @@ var testCases = [
 
   {
     name: 'No URIs',
-    createOpts: {request: defaultRequest},
+    createOpts: { request: defaultRequest },
     opts: [],
     expectationCheckers: []
   },
 
   {
     name: 'No params',
-    createOpts: {request: defaultRequest},
+    createOpts: { request: defaultRequest },
     opts: undefined,
     expectationCheckers: []
   }
@@ -109,7 +106,6 @@ function runTest(testCase) {
   test(testCase.name, basicTest);
 
   function basicTest(t) {
-
     // APIs now require auth
     getClientCredentials(
       {
@@ -137,8 +133,7 @@ function runTest(testCase) {
           for (var i = 0; i < testCase.expectationCheckers.length; ++i) {
             testCase.expectationCheckers[i](t, result[i]);
           }
-        }
-        else {
+        } else {
           testCase.expectationCheckers(t, result);
         }
         t.end();

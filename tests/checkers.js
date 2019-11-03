@@ -15,7 +15,7 @@ function checkArtist(t, artist) {
 function checkTrack(t, track) {
   t.equal(typeof track.name, 'string', 'track has a name.');
   t.equal(typeof track.href, 'string', 'track has an href.');
-  t.equal(typeof track.album, 'object', 'track has an album.');  
+  t.equal(typeof track.album, 'object', 'track has an album.');
   t.ok(Array.isArray(track.artists), 'track has artists.');
 }
 

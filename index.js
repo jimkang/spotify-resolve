@@ -48,11 +48,9 @@ function SpotifyResolve(createOpts) {
 
     if (Array.isArray(opts)) {
       uris = opts;
-    }
-    else if (opts) {
+    } else if (opts) {
       uris = [opts];
-    }
-    else {
+    } else {
       callNextTick(done);
       return;
     }
@@ -65,8 +63,7 @@ function SpotifyResolve(createOpts) {
       if (parsedURIsByType[type].length > 0) {
         if (type === 'playlist') {
           parsedURIsByType[type].forEach(queueResolvePlaylist);
-        }
-        else {
+        } else {
           q.defer(resolveIds, type, pluck(parsedURIsByType[type], 'id'));
         }
       }
@@ -102,19 +99,16 @@ function SpotifyResolve(createOpts) {
 
       if (error) {
         done(error);
-      }
-      else if (!resultGroupsForTypes) {
+      } else if (!resultGroupsForTypes) {
         done(error, []);
-      }
-      else {
+      } else {
         resultGroupsForTypes.forEach(storeResultGroups);
         var finalResults = uris.map(getResolvedObjectForURI);
 
         if (!Array.isArray(opts)) {
           if (finalResults.length > 0) {
             finalResults = finalResults[0];
-          }
-          else {
+          } else {
             finalResults = undefined;
           }
         }
@@ -163,13 +157,13 @@ function SpotifyResolve(createOpts) {
     function passResults(error, response, results) {
       if (error) {
         done(error);
-      }
-      else if (response.statusCode === 401) {
-        var unauthorizedError = new Error('Authorization Error: received status code ' + response.statusCode);
+      } else if (response.statusCode === 401) {
+        var unauthorizedError = new Error(
+          'Authorization Error: received status code ' + response.statusCode
+        );
         unauthorizedError.name = 'Unauthorized';
         done(unauthorizedError, response);
-      }
-      else {
+      } else {
         done(error, results[apiInfo.relevantResultProperty]);
       }
     }
@@ -178,7 +172,11 @@ function SpotifyResolve(createOpts) {
   function resolvePlaylist(uriObject, done) {
     var reqOpts = {
       method: 'GET',
-      url: 'https://api.spotify.com/v1/users/' + uriObject.user + '/playlists/' + uriObject.id,
+      url:
+        'https://api.spotify.com/v1/users/' +
+        uriObject.user +
+        '/playlists/' +
+        uriObject.id,
       json: true
     };
 
@@ -193,14 +191,12 @@ function SpotifyResolve(createOpts) {
     function passResults(error, response, playlistObject) {
       if (error) {
         done(error);
-      }
-      else {
+      } else {
         // storeResultGroups expects arrays of arrays.
         done(error, [[playlistObject]]);
       }
     }
   }
-
 }
 
 module.exports = SpotifyResolve;

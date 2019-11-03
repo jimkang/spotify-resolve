@@ -30,10 +30,7 @@ var testCases = [
       'spotify:playlist:2rt3nNo9JVSWeH4IeMILrh',
       'spotify:playlist:6PeY74K2tQ78rZTtn0BLBF'
     ],
-    expectationCheckers: [
-      checkers.checkPlaylist,
-      checkers.checkPlaylist
-    ]
+    expectationCheckers: [checkers.checkPlaylist, checkers.checkPlaylist]
   }
 ];
 
@@ -68,8 +65,7 @@ function runTest(testCase) {
           for (var i = 0; i < testCase.expectationCheckers.length; ++i) {
             testCase.expectationCheckers[i](t, result[i]);
           }
-        }
-        else {
+        } else {
           testCase.expectationCheckers(t, result);
         }
         t.end();
