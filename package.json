@@ -21,7 +21,7 @@
   "homepage": "https://github.com/jimkang/spotify-resolve",
   "devDependencies": {
     "assert-no-error": "^1.0.0",
-    "eslint": "^3.4.0",
+    "eslint": "^4.18.2",
     "get-spotify-client-credentials": "^1.0.0",
     "request": "^2.73.0",
     "tape": "^4.6.0"
