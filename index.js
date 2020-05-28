@@ -23,6 +23,11 @@ var apiInfoForTypes = {
   playlist: {
     isPlaylist: true,
     limit: 1
+  },
+  episode: {
+    endpoint: 'https://api.spotify.com/v1/episodes',
+    relevantResultProperty: 'episodes',
+    limit: 10000
   }
 };
 

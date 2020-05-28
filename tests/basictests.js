@@ -97,7 +97,15 @@ var testCases = [
     createOpts: { request: defaultRequest },
     opts: undefined,
     expectationCheckers: []
+  },
+/*
+  {
+    name: 'A podcast episode',
+    createOpts: { request: defaultRequest },
+    opts: 'spotify:episode:3PXhh4yKTrI1rMNUvtPIh0',
+    expectationCheckers: checkers.checkEpisode
   }
+*/
 ];
 
 testCases.forEach(runTest);

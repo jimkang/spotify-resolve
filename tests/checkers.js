@@ -30,10 +30,16 @@ function checkPlaylist(t, playlist) {
   t.equal(typeof playlist.uri, 'string', 'playlist has a uri.');
 }
 
+function checkEpisode(t, episode) {
+  t.equal(typeof episode.name, 'string', 'episode has a name.');
+  t.equal(typeof episode.description, 'string', 'episode has a description.');
+}
+
 module.exports = {
-  checkAlbum: checkAlbum,
-  checkArtist: checkArtist,
-  checkTrack: checkTrack,
-  checkUndefined: checkUndefined,
-  checkPlaylist: checkPlaylist
+  checkAlbum,
+  checkArtist,
+  checkTrack,
+  checkUndefined,
+  checkPlaylist,
+  checkEpisode
 };
