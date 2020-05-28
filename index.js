@@ -48,7 +48,8 @@ function SpotifyResolve(createOpts) {
       track: [],
       artist: [],
       album: [],
-      playlist: []
+      playlist: [],
+      episode: []
     };
 
     if (Array.isArray(opts)) {
